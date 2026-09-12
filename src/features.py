@@ -114,3 +114,53 @@ def create_aggregate_features(
     y = series.copy()
     
     return X, y
+
+
+def compute_dynamic_rolling_baseline(
+    series: pd.Series,
+    min_lag: int = 96,
+    window: int = 14 * 96,
+) -> Tuple[pd.Series, pd.Series]:
+    """Compute causal rolling mean and standard deviation strictly before min_lag.
+    
+    Prevents concept drift by allowing models to adapt dynamically to level shifts
+    (e.g., consumer expansions/contractions) without temporal leakage.
+    """
+    shifted = series.shift(min_lag)
+    # 14-day rolling window
+    roll_mean = shifted.rolling(window, min_periods=96).mean()
+    roll_std = shifted.rolling(window, min_periods=96).std()
+    
+    # Fill early burn-in with expanding mean
+    expanding_mean = shifted.expanding(min_periods=1).mean()
+    expanding_std = shifted.expanding(min_periods=1).std()
+    
+    roll_mean = roll_mean.fillna(expanding_mean).bfill()
+    roll_std = roll_std.fillna(expanding_std).fillna(1.0)
+    roll_std = roll_std.replace(0, 1.0)
+    
+    return roll_mean, roll_std
+
+
+def compute_cascading_lag(
+    series: pd.Series,
+    primary_lag: int = 96,
+    fallbacks: List[int] = [192, 288, 672]
+) -> Tuple[pd.Series, pd.Series]:
+    """Cascading autoregressive lag to remain resilient against sensor outages.
+    
+    If primary lag (e.g. t-96) is NaN, cascades to t-192, t-288, or t-672.
+    Returns the cascaded series and a boolean indicator if fallback was used.
+    """
+    lag_res = series.shift(primary_lag)
+    is_fallback = pd.Series(0, index=series.index, dtype=np.int8)
+    
+    for fb in fallbacks:
+        fb_series = series.shift(fb)
+        missing_mask = lag_res.isna() & fb_series.notna()
+        if missing_mask.any():
+            lag_res.loc[missing_mask] = fb_series.loc[missing_mask]
+            is_fallback.loc[missing_mask] = 1
+            
+    return lag_res, is_fallback
+

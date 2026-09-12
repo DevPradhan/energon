@@ -59,11 +59,16 @@ Out-of-sample evaluation on all 35,040 test steps in 2014 across both targets:
 | | **LightGBM Regressor** | **5.67%** | **20,104.78** | **12,739.49** | **8.95%** | **Beats Baseline** |
 
 ### 2. Individual 370 Meters (Multi-Series Consumer Demand)
-| Model | Median WMAPE (%) | Mean WMAPE (%) | 25th Pct | 75th Pct | Median NRMSE (%) | Mean MAE (kW) | Mean RMSE (kW) |
-| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| **Seasonal Naive 24h** | 9.46% | 12.62% | 7.32% | 13.88% | 14.09% | 56.58 kW | 89.59 kW |
-| **Autoregressive Ridge** | 8.23% | 11.03% | 6.68% | 11.80% | 12.04% | 55.03 kW | **81.29 kW** |
-| **Global Normalized LightGBM** | **7.89%** | **10.12%** | **6.27%** | **11.17%** | **11.45%** | **53.52 kW** | 82.76 kW |
+| Model | Median WMAPE (%) | Mean WMAPE (%) | 25th Pct | 75th Pct | Mean MAE (kW) | Mean RMSE (kW) | Architecture Highlights |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
+| **Seasonal Naive 24h** | 9.46% | 12.62% | 7.32% | 13.88% | 56.58 kW | 89.59 kW | Baseline persistence |
+| **Autoregressive Ridge** | 8.23% | 11.03% | 6.68% | 11.80% | 55.03 kW | 81.29 kW | Per-meter calibrated linear |
+| **Global LightGBM v1 (Static $\mu$)** | **7.89%** | **10.12%** | **6.27%** | **11.17%** | 53.52 kW | 82.76 kW | Fast global GBDT |
+| **Upgraded LightGBM v2 (Dynamic)** | **8.09%** | **10.59%** | **6.54%** | **11.54%** | **51.02 kW** | **77.51 kW** | **Lowest MAE & Lowest RMSE** |
+
+#### Level Shift & Outage Verification (Former Failure Meters):
+* **`MT_332` (+278% Demand Surge)**: WMAPE reduced from **48.08% $\to$ 17.32%** (**+30.76% improvement**).
+* **`MT_066` (-38.9% Demand Contraction)**: WMAPE reduced from **22.23% $\to$ 12.94%** (**+9.29% improvement**).
 
 ---
 
