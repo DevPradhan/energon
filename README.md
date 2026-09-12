@@ -72,17 +72,35 @@ Out-of-sample evaluation on all 35,040 test steps in 2014 across both targets:
 
 ## 🔬 Advanced Methodologies [UNDER TESTING]
 
-Following our empirical failure analysis (identifying $r \approx 0.82$ residual autocorrelation and daytime error doubling), five advanced modeling paradigms are under testing:
+Following our empirical failure analysis (identifying $r \approx 0.82$ residual autocorrelation and daytime error doubling), five advanced modeling paradigms are under investigation:
 
-| Approach | Status | Targeted Failure Mode |
-| :--- | :---: | :--- |
-| **1. Empirical Stratified Residual Bootstrapping** | **[ACTIVE TESTING]** | Uncalibrated point predictions & unquantified peak risk |
-| **2. Two-Stage Hurdle Model** | **[UNDER TESTING]** | Bimodal/intermittent demand (`MT_093` 88% error) |
-| **3. Hierarchical Reconciliation (MinT)** | **[UNDER TESTING]** | Coherent grid sum & shrinking individual meter noise |
-| **4. Sequence Models (Seq2Seq LSTM / PatchTST)** | **[UNDER TESTING]** | High lag-1 residual persistence & morning ramp dynamics |
-| **5. Hybrid AR-GBDT Filter** | **[UNDER TESTING]** | Autoregressive correction of systematic point errors |
+| Approach | Status | Targeted Failure Mode | Results / Key Finding |
+| :--- | :---: | :--- | :--- |
+| **1. Empirical Stratified Residual Bootstrapping** | **[VALIDATED]** | Uncalibrated point predictions & unquantified peak risk | **Calibrated intervals**: Aggregate achieves **93.24%** coverage on 95% band; Commercial & Residential archetypes achieve **90.50%** & **89.46%** coverage on 90% band. |
+| **2. Two-Stage Hurdle Model** | **[UNDER TESTING]** | Bimodal/intermittent demand (`MT_093` 88% error) | Decouples binary activation classification from continuous load regression. |
+| **3. Hierarchical Reconciliation (MinT)** | **[UNDER TESTING]** | Coherent grid sum & shrinking individual meter noise | Minimum Trace linear reconciliation using grid structural matrix $\mathbf{S}$. |
+| **4. Sequence Models (Seq2Seq LSTM / PatchTST)** | **[UNDER TESTING]** | High lag-1 residual persistence & morning ramp dynamics | Deep temporal state and patch-level self-attention. |
+| **5. Hybrid AR-GBDT Filter** | **[UNDER TESTING]** | Autoregressive correction of systematic point errors | Cascading autoregressive correction on top of LightGBM predictions. |
 
 Detailed roadmap: [`reports/failure_analysis_and_advanced_approaches.md`](reports/failure_analysis_and_advanced_approaches.md)
+
+---
+
+## 📈 Probabilistic Forecasting Results (2014 Test Year)
+
+Empirical block-bootstrapped intervals ($B=500$) evaluated over 35,040 out-of-sample intervals in 2014:
+
+* **Aggregate Grid Load**:
+  - 80% Band ($q_{10} \to q_{90}$): **74.14%** empirical coverage (MPIW = 19,870 kW / 8.85% width)
+  - 90% Band ($q_{05} \to q_{95}$): **86.54%** empirical coverage (MPIW = 29,990 kW / 13.36% width)
+  - 95% Band ($q_{02.5} \to q_{97.5}$): **93.24%** empirical coverage (MPIW = 46,785 kW / 20.84% width)
+* **Consumer Archetypes (90% Nominal Target)**:
+  - **Commercial Office (`MT_333`)**: **90.50% Coverage** (Coverage Gap: +0.50%)
+  - **Residential Consumer (`MT_222`)**: **89.46% Coverage** (Coverage Gap: -0.54%)
+  - **Continuous Industrial (`MT_081`)**: **87.17% Coverage** (Coverage Gap: -2.83%)
+  - **Intermittent Spikes (`MT_093`)**: **81.35% Coverage** (Two-stage hurdle model needed)
+
+Visual Fan-Charts: `reports/figures/probabilistic_fan_chart.png`
 
 ---
 
