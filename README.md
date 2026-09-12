@@ -70,6 +70,20 @@ Out-of-sample evaluation on all 35,040 test steps in 2014 across both targets:
 * **`MT_332` (+278% Demand Surge)**: WMAPE reduced from **48.08% $\to$ 17.32%** (**+30.76% improvement**).
 * **`MT_066` (-38.9% Demand Contraction)**: WMAPE reduced from **22.23% $\to$ 12.94%** (**+9.29% improvement**).
 
+## 🔬 Advanced Methodologies [UNDER TESTING]
+
+Following our empirical failure analysis (identifying $r \approx 0.82$ residual autocorrelation and daytime error doubling), five advanced modeling paradigms are under testing:
+
+| Approach | Status | Targeted Failure Mode |
+| :--- | :---: | :--- |
+| **1. Empirical Stratified Residual Bootstrapping** | **[ACTIVE TESTING]** | Uncalibrated point predictions & unquantified peak risk |
+| **2. Two-Stage Hurdle Model** | **[UNDER TESTING]** | Bimodal/intermittent demand (`MT_093` 88% error) |
+| **3. Hierarchical Reconciliation (MinT)** | **[UNDER TESTING]** | Coherent grid sum & shrinking individual meter noise |
+| **4. Sequence Models (Seq2Seq LSTM / PatchTST)** | **[UNDER TESTING]** | High lag-1 residual persistence & morning ramp dynamics |
+| **5. Hybrid AR-GBDT Filter** | **[UNDER TESTING]** | Autoregressive correction of systematic point errors |
+
+Detailed roadmap: [`reports/failure_analysis_and_advanced_approaches.md`](reports/failure_analysis_and_advanced_approaches.md)
+
 ---
 
 ## 🚀 Quickstart
