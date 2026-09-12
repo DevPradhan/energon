@@ -1,0 +1,53 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# IDEs
+.vscode/
+.idea/
+
+# Large Datasets and Raw Files (>100MB / binary data)
+data/electricityloaddiagrams20112014/
+data/*.parquet
+data/Steel_industry_data.csv
+*.parquet
+__MACOSX/
+.DS_Store
+
+# Preserve baseline evaluation outputs and requirements
+!data/baseline_*.csv
+!requirements.txt
