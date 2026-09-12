@@ -1,6 +1,8 @@
 # Energon ⚡
 
-High-precision electricity load forecasting pipeline and evaluation benchmark for smart grid telemetry.
+High-precision electricity load forecasting pipeline, probabilistic uncertainty benchmarks, and failure mode analysis for smart grid telemetry.
+
+📖 **[Read the Full Technical Documentation & Architecture Report](DOCUMENTATION.md)**
 
 ---
 
