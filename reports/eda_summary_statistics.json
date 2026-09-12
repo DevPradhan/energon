@@ -1,0 +1,36 @@
+{
+  "dataset": {
+    "total_meters": 370,
+    "time_range": [
+      "2011-01-01 00:15:00",
+      "2015-01-01 00:00:00"
+    ],
+    "total_intervals": 140256,
+    "stable_period_start": "2012-01-01"
+  },
+  "aggregate_load": {
+    "mean_kw": 219912.234375,
+    "median_kw": 224634.6875,
+    "std_kw": 81966.0,
+    "min_kw": 60672.23046875,
+    "max_kw": 452653.90625,
+    "peak_to_average_ratio": 2.0583388805389404,
+    "weekday_mean_kw": 220555.734375,
+    "weekend_mean_kw": 218302.390625,
+    "weekend_drop_pct": 1.021665334701538,
+    "adf_raw_pvalue": 0.0005037648261694912,
+    "adf_seasonal_diff_pvalue": 0.0
+  },
+  "meter_heterogeneity": {
+    "min_meter_mean_kw": 3.9002509117126465,
+    "median_meter_mean_kw": 126.70698547363281,
+    "mean_meter_mean_kw": 623.4929809570312,
+    "max_meter_mean_kw": 50144.890625,
+    "dynamic_scale_ratio": 12856.8369140625,
+    "mean_load_factor": 0.4044427275657654,
+    "median_load_factor": 0.4204031825065613,
+    "median_corr_with_agg": 0.7258516340620194,
+    "p25_corr_with_agg": 0.3516060726917447,
+    "p75_corr_with_agg": 0.8346107537184765
+  }
+}
